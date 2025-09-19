@@ -1,45 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Parking Map</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-  <style>
-    .fleet-slot {
-      width: 80px;
-      height: 40px;
-      border: 1px solid #ccc;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 2px;
-    }
-
-    .employee-slot {
-      width: 40px;
-      height: 90px;
-      border: 1px solid #ccc;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 2px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harbinger Motors Parking Map</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="container mt-5">
-  <h1 class="mb-4 text-center">Harbinger Motors GG1 Lot Map</h1>
-    <div class="row g-0 justify-content-center">
-    <div id="employee-parking-grid" class="col-12 text-center">
-      </div>
-    <div id="fleet-parking-grid" class="col-12 text-center">
-      </div>
-  </div>
-  
+    <h1 class="mb-4 text-center">Harbinger Motors GG1 Lot Map</h1>
+    <hr>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card bg-light p-3 parking-controls-box">
+                <h4 class="card-title text-center">Grid Controls</h4>
+                <div class="mb-4 parking-zone-controls" id="employee-zone-a-controls">
+                    <h5 class="text-center">Employee Parking Zone A</h5>
+                    <div class="d-flex justify-content-between mb-2">
+                        <div>
+                            <label for="employeeStart" class="form-label">Start Slot:</label>
+                            <input type="text" id="employeeStart" class="form-control" value="A20">
+                        </div>
+                        <div>
+                            <label for="employeeEnd" class="form-label">End Slot:</label>
+                            <input type="text" id="employeeEnd" class="form-control" value="M20">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-4 parking-zone-controls" id="fleet-zone-a-controls">
+                    <h5 class="text-center">Fleet Parking Zone A</h5>
+                    <div class="d-flex justify-content-between mb-2">
+                        <div>
+                            <label for="fleetAStart" class="form-label">Start Slot:</label>
+                            <input type="text" id="fleetAStart" class="form-control" value="A14">
+                        </div>
+                        <div>
+                            <label for="fleetAEnd" class="form-label">End Slot:</label>
+                            <input type="text" id="fleetAEnd" class="form-control" value="M19">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-4 parking-zone-controls" id="fleet-zone-b-controls">
+                    <h5 class="text-center">Fleet Parking Zone B</h5>
+                    <div class="d-flex justify-content-between mb-2">
+                        <div>
+                            <label for="fleetBStart" class="form-label">Start Slot:</label>
+                            <input type="text" id="fleetBStart" class="form-control" value="A8">
+                        </div>
+                        <div>
+                            <label for="fleetBEnd" class="form-label">End Slot:</label>
+                            <input type="text" id="fleetBEnd" class="form-control" value="M13">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-4 parking-zone-controls" id="fleet-zone-c-controls">
+                    <h5 class="text-center">Fleet Parking Zone C</h5>
+                    <div class="d-flex justify-content-between mb-2">
+                        <div>
+                            <label for="fleetCStart" class="form-label">Start Slot:</label>
+                            <input type="text" id="fleetCStart" class="form-control" value="A1">
+                        </div>
+                        <div>
+                            <label for="fleetCEnd" class="form-label">End Slot:</label>
+                            <input type="text" id="fleetCEnd" class="form-control" value="M7">
+                        </div>
+                    </div>
+                </div>
+                
+                <button id="generateBtn" class="btn btn-light btn-primary mt-3">Generate Parking Map</button>
+            </div>
+
+            <div class="card bg-light p-3 vin-number-box">
+              <h4 class="card-title text-center">Slot Assignment</h4>
+                <div class="mb-4 vin-control" id="vin-num-control">
+                    <div class="d-flex mb-2">
+                        <div>
+                            <label for="employeeStart" class="form-label">Slot Number:</label>
+                            <input type="text" id="employeeStart" class="form-control" value="A20">
+                        </div>
+                        <div>
+                            <label for="employeeEnd" class="form-label">VIN Number:</label>
+                            <input type="text" id="employeeEnd" class="form-control" value="M20">
+                        </div>
+                    </div>
+                <button id="VinBtn" class="btn btn-light btn-primary mt-3">Update VIN</button>
+                </div>  
+            </div>
+        </div>
+        
+        <div class="col-md-8">
+            <h2 class="text-center">Grid Layout</h2>
+            <div id="parking-grids-container" class="row g-0 justify-content-center">
+                </div>
+        </div>
+    </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-<script src ="grid.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="grid.js"></script>
 </body>
 </html>
