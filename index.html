@@ -11,94 +11,179 @@
 
 <div class="container mt-5">
     <h1 class="mb-4 text-center">Harbinger Motors GG1 Lot Map</h1>
+    <div class="d-flex">
+        <input type="text" class="form-control me-2" placeholder="Enter VIN number...">
+        <button id="search-btn" class="btn btn-light btn-primary" type="button">
+            <i class="bi bi-search"></i> Search
+        </button>
+    </div>
     <hr>
     <div class="row">
-        <div class="col-md-4">
-            <div class="card bg-light p-3 parking-controls-box">
-                <h4 class="card-title text-center">Grid Controls</h4>
-                <div class="mb-4 parking-zone-controls" id="employee-zone-a-controls">
-                    <h5 class="text-center">Employee Parking Zone A</h5>
-                    <div class="d-flex justify-content-between mb-2">
-                        <div>
-                            <label for="employeeStart" class="form-label">Start Slot:</label>
-                            <input type="text" id="employeeStart" class="form-control" value="A20">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-6 mb-3"> <div class="card bg-light p-3 parking-controls-box">
+                        <h4 class="card-title text-center">Grid Controls</h4>
+                        <div class="mb-4 parking-zone-controls" id="employee-zone-a-controls">
+                            <h5 class="text-center">Employee Parking Zone A</h5>
+                            <div class="d-flex justify-content-between mb-2">
+                                <div>
+                                    <label for="employeeStart" class="form-label">Start Slot:</label>
+                                    <input type="text" id="employeeStart" class="form-control" value="A20">
+                                </div>
+                                <div>
+                                    <label for="employeeEnd" class="form-label">End Slot:</label>
+                                    <input type="text" id="employeeEnd" class="form-control" value="M20">
+                                </div>
+                            </div>
                         </div>
-                        <div>
-                            <label for="employeeEnd" class="form-label">End Slot:</label>
-                            <input type="text" id="employeeEnd" class="form-control" value="M20">
+                        
+                        <div class="mb-4 parking-zone-controls" id="fleet-zone-a-controls">
+                            <h5 class="text-center">Fleet Parking Zone A</h5>
+                            <div class="d-flex justify-content-between mb-2">
+                                <div>
+                                    <label for="fleetAStart" class="form-label">Start Slot:</label>
+                                    <input type="text" id="fleetAStart" class="form-control" value="A14">
+                                </div>
+                                <div>
+                                    <label for="fleetAEnd" class="form-label">End Slot:</label>
+                                    <input type="text" id="fleetAEnd" class="form-control" value="M19">
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                
-                <div class="mb-4 parking-zone-controls" id="fleet-zone-a-controls">
-                    <h5 class="text-center">Fleet Parking Zone A</h5>
-                    <div class="d-flex justify-content-between mb-2">
-                        <div>
-                            <label for="fleetAStart" class="form-label">Start Slot:</label>
-                            <input type="text" id="fleetAStart" class="form-control" value="A14">
+
+                        <div class="mb-4 parking-zone-controls" id="fleet-zone-b-controls">
+                            <h5 class="text-center">Fleet Parking Zone B</h5>
+                            <div class="d-flex justify-content-between mb-2">
+                                <div>
+                                    <label for="fleetBStart" class="form-label">Start Slot:</label>
+                                    <input type="text" id="fleetBStart" class="form-control" value="A8">
+                                </div>
+                                <div>
+                                    <label for="fleetBEnd" class="form-label">End Slot:</label>
+                                    <input type="text" id="fleetBEnd" class="form-control" value="M13">
+                                </div>
+                            </div>
                         </div>
-                        <div>
-                            <label for="fleetAEnd" class="form-label">End Slot:</label>
-                            <input type="text" id="fleetAEnd" class="form-control" value="M19">
+
+                        <div class="mb-4 parking-zone-controls" id="fleet-zone-c-controls">
+                            <h5 class="text-center">Fleet Parking Zone C</h5>
+                            <div class="d-flex justify-content-between mb-2">
+                                <div>
+                                    <label for="fleetCStart" class="form-label">Start Slot:</label>
+                                    <input type="text" id="fleetCStart" class="form-control" value="A1">
+                                </div>
+                                <div>
+                                    <label for="fleetCEnd" class="form-label">End Slot:</label>
+                                    <input type="text" id="fleetCEnd" class="form-control" value="M7">
+                                </div>
+                            </div>
                         </div>
+
+                        <div class="mb-4 parking-zone-controls" id="fleet-zone-d-controls">
+                            <h5 class="text-center">Fleet Parking Zone D</h5>
+                            <div class="d-flex justify-content-between mb-2">
+                                <div>
+                                    <label for="fleetCStart" class="form-label">Start Slot:</label>
+                                    <input type="text" id="fleetDStart" class="form-control" value="A1">
+                                </div>
+                                <div>
+                                    <label for="fleetCEnd" class="form-label">End Slot:</label>
+                                    <input type="text" id="fleetDEnd" class="form-control" value="M7">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4 parking-zone-controls" id="fleet-zone-e-controls">
+                            <h5 class="text-center">Fleet Parking Zone E</h5>
+                            <div class="d-flex justify-content-between mb-2">
+                                <div>
+                                    <label for="fleetEStart" class="form-label">Start Slot:</label>
+                                    <input type="text" id="fleetEStart" class="form-control" value="A1">
+                                </div>
+                                <div>
+                                    <label for="fleetEEnd" class="form-label">End Slot:</label>
+                                    <input type="text" id="fleetEEnd" class="form-control" value="M7">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4 parking-zone-controls" id="fleet-zone-f-controls">
+                            <h5 class="text-center">Fleet Parking Zone F</h5>
+                            <div class="d-flex justify-content-between mb-2">
+                                <div>
+                                    <label for="fleetFStart" class="form-label">Start Slot:</label>
+                                    <input type="text" id="fleetFStart" class="form-control" value="A1">
+                                </div>
+                                <div>
+                                    <label for="fleetFEnd" class="form-label">End Slot:</label>
+                                    <input type="text" id="fleetFEnd" class="form-control" value="M7">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button id="generateBtn" class="btn btn-light btn-primary mt-3">Generate Parking Map</button>
                     </div>
                 </div>
 
-                <div class="mb-4 parking-zone-controls" id="fleet-zone-b-controls">
-                    <h5 class="text-center">Fleet Parking Zone B</h5>
-                    <div class="d-flex justify-content-between mb-2">
-                        <div>
-                            <label for="fleetBStart" class="form-label">Start Slot:</label>
-                            <input type="text" id="fleetBStart" class="form-control" value="A8">
+                <div class="col-md-6 mb-3"> <div class="card bg-light p-3 vin-number-box">
+                        <h4 class="card-title text-center">Slot Assignment</h4>
+                        <div class="mb-2">
+                            <label for="vinSlotInput" class="form-label">Slot Number:</label>
+                            <input type="text" id="vinSlotInput" class="form-control" placeholder="e.g., A1">
                         </div>
-                        <div>
-                            <label for="fleetBEnd" class="form-label">End Slot:</label>
-                            <input type="text" id="fleetBEnd" class="form-control" value="M13">
+                        <div class="mb-2">
+                            <label for="vinNumberInput" class="form-label">VIN Number:</label>
+                            <input type="text" id="vinNumberInput" class="form-control" placeholder="Enter VIN">
                         </div>
-                    </div>
-                </div>
-
-                <div class="mb-4 parking-zone-controls" id="fleet-zone-c-controls">
-                    <h5 class="text-center">Fleet Parking Zone C</h5>
-                    <div class="d-flex justify-content-between mb-2">
-                        <div>
-                            <label for="fleetCStart" class="form-label">Start Slot:</label>
-                            <input type="text" id="fleetCStart" class="form-control" value="A1">
+                        <div class="d-grid gap-2">
+                            <button id="scanVinBtn" class="btn btn-light btn-primary mt-3" style="width: 150px;">Scan VIN 📷</button>
                         </div>
-                        <div>
-                            <label for="fleetCEnd" class="form-label">End Slot:</label>
-                            <input type="text" id="fleetCEnd" class="form-control" value="M7">
+                        <div class="d-grid gap-2">
+                            <button id="assignVinBtn" class="btn btn-light btn-primary mt-3">Update VIN</button>
                         </div>
                     </div>
                 </div>
-                
-                <button id="generateBtn" class="btn btn-light btn-primary mt-3">Generate Parking Map</button>
-            </div>
-
-            <div class="card bg-light p-3 vin-number-box">
-              <h4 class="card-title text-center">Slot Assignment</h4>
-                <div class="mb-4 vin-control" id="vin-num-control">
-                    <div class="d-flex mb-2">
-                        <div>
-                            <label for="employeeStart" class="form-label">Slot Number:</label>
-                            <input type="text" id="employeeStart" class="form-control" value="A20">
-                        </div>
-                        <div>
-                            <label for="employeeEnd" class="form-label">VIN Number:</label>
-                            <input type="text" id="employeeEnd" class="form-control" value="M20">
-                        </div>
-                    </div>
-                <button id="VinBtn" class="btn btn-light btn-primary mt-3">Update VIN</button>
-                </div>  
             </div>
         </div>
         
-        <div class="col-md-8">
-            <h2 class="text-center">Grid Layout</h2>
+        <div class="col-md-12">
+            <h3 class="text-center">Grid Layout</h3>
+        <div class="grid-container-box">
             <div id="parking-grids-container" class="row g-0 justify-content-center">
-                </div>
+            </div>
+        </div>
         </div>
     </div>
+</div>
+
+<div class="container mt-5">
+    <div class="text-center" id="availSummary"></div>
+</div>
+
+<div class="container mt-5">
+    <h4 class="card-title text-center">VIN Assignments</h4>
+    <div class="table-responsive">
+        <table class="table table-sm table-striped">
+            <thead>
+                <tr>
+                    <th>Line</th>
+                    <th>Zone</th>
+                    <th>Slot</th>
+                    <th>VIN</th>
+                    <th>Timestamp</th>
+                </tr>
+            </thead>
+            <tbody id="vinTableBody">
+                </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-center">
+        <button id="clearAllBtn" class="btn btn-light btn-primary mt-3">Clear All Data</button>
+    </div>
+    
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>

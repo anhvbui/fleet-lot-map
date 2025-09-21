@@ -1,6 +1,6 @@
 .parking-slot {
   width: 40px;
-  height: 40px;
+  height: 20px;
   border: 1px solid #ccc; /* Default subtle border for all slots */
   display: flex;
   align-items: center;
@@ -10,14 +10,60 @@
   font-weight: bold;
 }
 
+.grid-container-box {
+  border: 3px solid #777777; /* Adds a solid border around the box */
+  padding: 15px; 
+  margin: 20px; 
+}
+
+/* Add these new classes to your style.css file */
+
+.fleetA-slot {
+    box-shadow: inset 0 0 0 2px #006400; /* Dark Green */
+}
+
+.fleetB-slot {
+    box-shadow: inset 0 0 0 2px #DAA520; /* Dark Yellow */
+}
+
+.fleetC-slot {
+    box-shadow: inset 0 0 0 2px #ff7b00b2; /* Orange */
+}
+
+.fleetD-slot {
+    box-shadow: inset 0 0 0 2px #4682B4; /* Dark Steel Blue */
+}
+
+.fleetE-slot, .fleetF-slot {
+    box-shadow: inset 0 0 0 2px #F5F5DC; /* Beige for both E and F */
+}
+
+
+#search-btn{
+  border: 1px solid #5a5a5a;
+}
+
 #generateBtn{
   border: 1px solid #5a5a5a;
 }
 
-#VinBtn{
+#assignVinBtn{
     border: 1px solid #5a5a5a;
     align-items: center;
     justify-content: center;
+}
+
+#scanVinBtn{
+    border: 1px solid #5a5a5a;
+    align-items: center;
+    justify-content: center;
+}
+
+#clearAllBtn{
+    border: 1px solid #5a5a5a;
+    width: 400px;
+    margin-bottom: 100px;
+  
 }
 /* Class for empty slots (unchanged) */
 .empty-slot {
@@ -25,39 +71,42 @@
   color: #555;
 }
 
-/* Class for Employee slots - now uses a border/outline */
+/* Class for Employee slots */
 .employee-slot {
-  /* Removed background-color */
-  /* color: white; <-- remove if you want default empty-slot color for text */
-  box-shadow: inset 0 0 0 2px #6735a8; /* Green border/outline */
-  /* You could also use: border: 2px solid #28a745; */
+  box-shadow: inset 0 0 0 2px #6735a8; 
+
 }
 
-/* Class for Fleet slots - now uses a border/outline */
+/* Class for Fleet slots */
 .fleet-slot {
-  /* Removed background-color */
-  /* color: white; <-- remove if you want default empty-slot color for text */
-  box-shadow: inset 0 0 0 2px #207ae2; /* Red border/outline */
-  /* You could also use: border: 2px solid #dc3545; */
+  box-shadow: inset 0 0 0 2px #207ae2; 
 }
 
-/* New: Optional availability colors */
+
 .parking-slot.available {
-    background-color: #d4edda; /* Light green for available */
+    background-color: #d4edda;
     color: #175a27;
 }
 
 .parking-slot.occupied {
-    background-color: #f8d7da; /* Light red for occupied */
+    background-color: #f8d7da;
     color: #80212a;
 }
 
 .parking-slot.reserved {
-    background-color: #fff3cd; /* Light yellow for reserved */
+    background-color: #fff3cd;
     color: #856404;
 }
 
 
 .vin-number-box{
     margin-top: 30px;
+}
+
+#vinNumberInput{
+    
+}
+#availSummary{
+  font-size: 2rem;
+  color:#7e212b
 }
