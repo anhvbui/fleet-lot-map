@@ -10,7 +10,7 @@
 <body>
 
 <div class="container mt-5">
-    <h1 class="mb-4 text-center">Harbinger Motors GG1 Lot Map</h1>
+    <h1 class="mb-4 text-center">Harbinger Motors Lot Map</h1>
     <div class="d-flex">
         <input type="text" class="form-control me-2" placeholder="Enter VIN number...">
         <button id="search-btn" class="btn btn-light btn-primary" type="button">
@@ -28,11 +28,11 @@
                             <div class="d-flex justify-content-between mb-2">
                                 <div>
                                     <label for="employeeStart" class="form-label">Start Slot:</label>
-                                    <input type="text" id="employeeStart" class="form-control" value="A20">
+                                    <input type="text" id="employeeStart" class="form-control" value="C40">
                                 </div>
                                 <div>
                                     <label for="employeeEnd" class="form-label">End Slot:</label>
-                                    <input type="text" id="employeeEnd" class="form-control" value="M20">
+                                    <input type="text" id="employeeEnd" class="form-control" value="T40">
                                 </div>
                             </div>
                         </div>
@@ -42,11 +42,11 @@
                             <div class="d-flex justify-content-between mb-2">
                                 <div>
                                     <label for="fleetAStart" class="form-label">Start Slot:</label>
-                                    <input type="text" id="fleetAStart" class="form-control" value="A14">
+                                    <input type="text" id="fleetAStart" class="form-control" value="A8">
                                 </div>
                                 <div>
                                     <label for="fleetAEnd" class="form-label">End Slot:</label>
-                                    <input type="text" id="fleetAEnd" class="form-control" value="M19">
+                                    <input type="text" id="fleetAEnd" class="form-control" value="A1">
                                 </div>
                             </div>
                         </div>
@@ -56,11 +56,11 @@
                             <div class="d-flex justify-content-between mb-2">
                                 <div>
                                     <label for="fleetBStart" class="form-label">Start Slot:</label>
-                                    <input type="text" id="fleetBStart" class="form-control" value="A8">
+                                    <input type="text" id="fleetBStart" class="form-control" value="A40">
                                 </div>
                                 <div>
                                     <label for="fleetBEnd" class="form-label">End Slot:</label>
-                                    <input type="text" id="fleetBEnd" class="form-control" value="M13">
+                                    <input type="text" id="fleetBEnd" class="form-control" value="B34">
                                 </div>
                             </div>
                         </div>
@@ -70,11 +70,11 @@
                             <div class="d-flex justify-content-between mb-2">
                                 <div>
                                     <label for="fleetCStart" class="form-label">Start Slot:</label>
-                                    <input type="text" id="fleetCStart" class="form-control" value="A1">
+                                    <input type="text" id="fleetCStart" class="form-control" value="E35">
                                 </div>
                                 <div>
                                     <label for="fleetCEnd" class="form-label">End Slot:</label>
-                                    <input type="text" id="fleetCEnd" class="form-control" value="M7">
+                                    <input type="text" id="fleetCEnd" class="form-control" value="G22">
                                 </div>
                             </div>
                         </div>
@@ -84,11 +84,11 @@
                             <div class="d-flex justify-content-between mb-2">
                                 <div>
                                     <label for="fleetCStart" class="form-label">Start Slot:</label>
-                                    <input type="text" id="fleetDStart" class="form-control" value="A1">
+                                    <input type="text" id="fleetDStart" class="form-control" value="I35">
                                 </div>
                                 <div>
                                     <label for="fleetCEnd" class="form-label">End Slot:</label>
-                                    <input type="text" id="fleetDEnd" class="form-control" value="M7">
+                                    <input type="text" id="fleetDEnd" class="form-control" value="K26">
                                 </div>
                             </div>
                         </div>
@@ -98,11 +98,11 @@
                             <div class="d-flex justify-content-between mb-2">
                                 <div>
                                     <label for="fleetEStart" class="form-label">Start Slot:</label>
-                                    <input type="text" id="fleetEStart" class="form-control" value="A1">
+                                    <input type="text" id="fleetEStart" class="form-control" value="K10">
                                 </div>
                                 <div>
                                     <label for="fleetEEnd" class="form-label">End Slot:</label>
-                                    <input type="text" id="fleetEEnd" class="form-control" value="M7">
+                                    <input type="text" id="fleetEEnd" class="form-control" value="L1">
                                 </div>
                             </div>
                         </div>
@@ -112,11 +112,11 @@
                             <div class="d-flex justify-content-between mb-2">
                                 <div>
                                     <label for="fleetFStart" class="form-label">Start Slot:</label>
-                                    <input type="text" id="fleetFStart" class="form-control" value="A1">
+                                    <input type="text" id="fleetFStart" class="form-control" value="N10">
                                 </div>
                                 <div>
                                     <label for="fleetFEnd" class="form-label">End Slot:</label>
-                                    <input type="text" id="fleetFEnd" class="form-control" value="M7">
+                                    <input type="text" id="fleetFEnd" class="form-control" value="O1">
                                 </div>
                             </div>
                         </div>
@@ -125,7 +125,8 @@
                     </div>
                 </div>
 
-                <div class="col-md-6 mb-3"> <div class="card bg-light p-3 vin-number-box">
+                <div class="col-md-6 mb-3"> 
+                    <div class="card bg-light p-3 vin-number-box">
                         <h4 class="card-title text-center">Slot Assignment</h4>
                         <div class="mb-2">
                             <label for="vinSlotInput" class="form-label">Slot Number:</label>
@@ -141,8 +142,78 @@
                         <div class="d-grid gap-2">
                             <button id="assignVinBtn" class="btn btn-light btn-primary mt-3">Update VIN</button>
                         </div>
+                        <div class="d-grid gap-2">
+                            <button id="clearVinBtn" class="btn btn-light btn-primary mt-3">Clear VIN</button>
+                        </div>
+                    </div>
+
+                    <div id="action-message" class="text-center fw-bold mb-2"></div>
+
+                    <div class="card bg-light p-3 vin-status-box">
+                    <h4 class="card-title text-center">VIN Status</h4>
+                        <div class="mb-2">
+                            <label for="vinStatusInput" class="form-label">VIN Number:</label>
+                            <input type="text" id="vinStatusInput" class="form-control" placeholder="Enter VIN">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="hubReworkStatus" class="form-label">Hub Rework Status:</label>
+                            <select id="hubReworkStatus" class="form-select">
+                                <option selected disabled>Select a status...</option>
+                                <option value="Not Started">Not Started</option>
+                                <option value="In Progress">In Progress</option>
+                                <option value="Complete">Completed</option>
+                                <option value="Blocked">Blocked</option>
+                                <option value="Not Required">Not Required</option>
+                                <option value="Staged">Staged</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="GAReworkStatus" class="form-label">GA Rework Status:</label>
+                            <select id="GAReworkStatus" class="form-select">
+                                <option selected disabled>Select a status...</option>
+                                <option value="Not Started">Not Started</option>
+                                <option value="In Progress">In Progress</option>
+                                <option value="Complete">Completed</option>
+                                <option value="Blocked">Blocked</option>
+                                <option value="Not Required">Not Required</option>
+                                <option value="Staged">Staged</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="chargingStatus" class="form-label">Charging Rework Status:</label>
+                            <select id="chargingStatus" class="form-select">
+                                <option selected disabled>Select a status...</option>
+                                <option value="Not Started">Not Started</option>
+                                <option value="In Progress">In Progress</option>
+                                <option value="Complete">Completed</option>
+                                <option value="Blocked">Blocked</option>
+                                <option value="Not Required">Not Required</option>
+                                <option value="Staged">Staged</option>
+                            </select>
+                        </div>
+                        <!--    
+                        <div class="hub-dropdown-btn-group">
+                            <button type="button" class="btn btn-light btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="sr-only">Hub Rework Status</span>
+                            </button>
+                            <div class="hub-dropdown-menu">
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </div>  -->
+
+
+                        <div class="d-grid gap-2">
+                            <button id="updateStatusBtn" class="btn btn-light btn-primary mt-3">Update Status</button>
+                        </div>
+                    </div>
                     </div>
                 </div>
+
             </div>
         </div>
         
@@ -162,6 +233,8 @@
 
 <div class="container mt-5">
     <h4 class="card-title text-center">VIN Assignments</h4>
+    <button id="exportCsvBtn" class="btn btn-sm btn-outline-secondary">Export to CSV</button>
+    <div class="d-flex justify-content-between align-items-center mb-4"></div>
     <div class="table-responsive">
         <table class="table table-sm table-striped">
             <thead>
@@ -170,6 +243,9 @@
                     <th>Zone</th>
                     <th>Slot</th>
                     <th>VIN</th>
+                    <th>Hub Rework Status</th>
+                    <th>GA Rework Status</th>
+                    <th>Charging Status</th>
                     <th>Timestamp</th>
                 </tr>
             </thead>

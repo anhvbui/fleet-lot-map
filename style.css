@@ -16,8 +16,6 @@
   margin: 20px; 
 }
 
-/* Add these new classes to your style.css file */
-
 .fleetA-slot {
     box-shadow: inset 0 0 0 2px #006400; /* Dark Green */
 }
@@ -35,7 +33,7 @@
 }
 
 .fleetE-slot, .fleetF-slot {
-    box-shadow: inset 0 0 0 2px #F5F5DC; /* Beige for both E and F */
+    box-shadow: inset 0 0 0 2px #ceaf8a; /* Beige for both E and F */
 }
 
 
@@ -53,18 +51,38 @@
     justify-content: center;
 }
 
+#clearVinBtn{
+    border: 1px solid #5a5a5a;
+    align-items: center;
+    justify-content: center;
+}
 #scanVinBtn{
     border: 1px solid #5a5a5a;
     align-items: center;
     justify-content: center;
 }
 
+#updateStatusBtn{
+    border: 1px solid #5a5a5a;
+    align-items: center;
+    justify-content: center;
+}
 #clearAllBtn{
     border: 1px solid #5a5a5a;
     width: 400px;
-    margin-bottom: 100px;
-  
+    margin-bottom: 100px; 
 }
+
+#exportCsvBtn{
+  background-color: #90c49c;
+  font-size: 16px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  color:#ffffff;
+  border: 2px;
+  padding: 8px 16px;
+}
+
 /* Class for empty slots (unchanged) */
 .empty-slot {
   background-color: #f0f0f0;
@@ -98,11 +116,13 @@
     color: #856404;
 }
 
-
 .vin-number-box{
-    margin-top: 30px;
+    
 }
 
+.vin-status-box{
+    margin-top: 30px;
+}
 #vinNumberInput{
     
 }
