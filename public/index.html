@@ -83,11 +83,11 @@
                                 <h5 class="text-center">Fleet Parking Zone D</h5>
                                 <div class="d-flex justify-content-between mb-2">
                                     <div>
-                                        <label for="fleetCStart" class="form-label">Start Slot:</label>
+                                        <label for="fleetDStart" class="form-label">Start Slot:</label>
                                         <input type="text" id="fleetDStart" class="form-control" value="I35">
                                     </div>
                                     <div>
-                                        <label for="fleetCEnd" class="form-label">End Slot:</label>
+                                        <label for="fleetDEnd" class="form-label">End Slot:</label>
                                         <input type="text" id="fleetDEnd" class="form-control" value="K26">
                                     </div>
                                 </div>
@@ -262,37 +262,8 @@
         
     </div>
 
-    <script type="module">
-    // Make these variables global so grid.js can use them
-        window.app = null;
-        window.database = null;
-        window.dbFunctions = {};
-
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-analytics.js";
-        // Import ALL database functions your app will need
-        import { getDatabase, ref, set, get, onValue, remove } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-database.js";
-
-        // Your web app's Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyD7qC5px8dXI0mbMqpwDh6DzcWc17P64e0",
-            authDomain: "yard-app-81e9c.firebaseapp.com",
-            projectId: "yard-app-81e9c",
-            storageBucket: "yard-app-81e9c.firebasestorage.app",
-            messagingSenderId: "736027077936",
-            appId: "1:736027077936:web:4a9c49829e6a3d6831acf5",
-            measurementId: "G-3NV6NH0Z15"
-        };
-
-        // Initialize Firebase and assign to the global variables
-        window.app = initializeApp(firebaseConfig);
-        window.database = getDatabase(window.app);
-        // Store the database functions on the window object so grid.js can access them
-        window.dbFunctions = { ref, set, get, onValue, remove }; 
-        
-        const analytics = getAnalytics(window.app);
-    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-    <script src="grid.js" defer></script>
+    <script type="module" src="grid.js"></script>
+
 </body>
 </html>

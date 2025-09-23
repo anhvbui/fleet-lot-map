@@ -1,17 +1,25 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // This function will check repeatedly until Firebase is ready.
-    const waitForFirebase = setInterval(() => {
-        if (window.database && window.dbFunctions) {
-            clearInterval(waitForFirebase); // Stop checking
-            runApp(); // Run the main application logic
-        }
-    }, 100); // Check every 100ms
-});
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+import { getDatabase, ref, set, get, onValue, remove } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-database.js";
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyD7qC5px8dXI0mbMqpwDh6DzcWc17P64e0",
+    authDomain: "yard-app-81e9c.firebaseapp.com",
+    projectId: "yard-app-81e9c",
+    storageBucket: "yard-app-81e9c.firebasestorage.app",
+    messagingSenderId: "736027077936",
+    appId: "1:736027077936:web:4a9c49829e6a3d6831acf5",
+    measurementId: "G-3NV6NH0Z15"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+// STEP 2: CALL runApp() DIRECTLY. REMOVE THE OLD WAITING LOGIC.
+runApp();
 
 function runApp() {
-    // --- Firebase & App Globals ---
-    const { ref, set, get, onValue } = window.dbFunctions;
-    const db = window.database;
     let parkingLotSlots = []; // This is the local "state" of the app.
 
     // --- Element Selectors ---
@@ -57,6 +65,49 @@ function runApp() {
         setTimeout(() => (actionMessageEl.textContent = ''), 3000);
     };
 
+    // --- HELPER FUNCTION ---
+    // Generates a fresh, empty array of slot objects based on the zone inputs.
+    function generateFreshMapData() {
+        const zones = ['Employee', 'A', 'B', 'C', 'D', 'E', 'F'].map(z => {
+            const prefix = z === 'Employee' ? 'employee' : `fleet${z}`;
+            return {
+                name: z,
+                startSlot: document.getElementById(`${prefix}Start`).value,
+                endSlot: document.getElementById(`${prefix}End`).value,
+            };
+        });
+
+        let newParkingLotSlots = [];
+        let lineNumber = 1;
+
+        zones.forEach(zone => {
+            const startCoords = parseSlotInput(zone.startSlot);
+            const endCoords = parseSlotInput(zone.endSlot);
+            if (!startCoords || !endCoords) return;
+
+            const [startRow, endRow] = [Math.min(startCoords.row, endCoords.row), Math.max(startCoords.row, endCoords.row)];
+            const [startCol, endCol] = [Math.min(startCoords.col, endCoords.col), Math.max(startCoords.col, endCoords.col)];
+
+            for (let row = startRow; row <= endRow; row++) {
+                for (let col = startCol; col <= endCol; col++) {
+                    const colLetter = String.fromCharCode('A'.charCodeAt(0) + col - 1);
+                    const slotName = `${colLetter}${row}`;
+                    newParkingLotSlots.push({
+                        line: lineNumber++,
+                        slot: slotName,
+                        zone: zone.name,
+                        vin: '',
+                        hubRework: '',
+                        gaRework: '',
+                        chargingStatus: '',
+                        timestamp: '',
+                    });
+                }
+            }
+        });
+        return newParkingLotSlots;
+    }
+
     // --- Core Application Logic ---
 
     function createEmptyGrid() {
@@ -80,15 +131,12 @@ function runApp() {
     }
 
     function updateUI() {
-        const assignments = Array.isArray(parkingLotSlots) ? parkingLotSlots : Object.values(parkingLotSlots);
+        createEmptyGrid(); // ADD THIS LINE to completely reset the grid visually
+
+        const assignments = parkingLotSlots; 
         vinTableBody.innerHTML = '';
         let occupiedCount = 0;
-        let totalSlots = 0;
-
-        // First, reset all slots to a default empty state
-        document.querySelectorAll('.parking-slot').forEach(slot => {
-            slot.className = 'parking-slot empty-slot';
-        });
+        let totalSlots = 0
 
         assignments.forEach(assignment => {
             if (assignment.zone !== 'Employee') {
@@ -97,25 +145,31 @@ function runApp() {
             }
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td>${assignment.line}</td><td>${assignment.zone}</td><td>${assignment.slot}</td>
+                <td>${assignment.line}</td><td>${assignment.zone || 'N/A'}</td><td>${assignment.slot}</td>
                 <td>${assignment.vin || ''}</td><td>${assignment.hubRework || ''}</td>
                 <td>${assignment.gaRework || ''}</td><td>${assignment.chargingStatus || ''}</td>
                 <td>${assignment.timestamp || ''}</td>
             `;
             vinTableBody.appendChild(row);
 
-            const slotElement = document.getElementById(`slot-${assignment.slot}`);
+            const letter = assignment.slot.match(/[a-zA-Z]+/)[0];
+            const number = assignment.slot.match(/\d+/)[0];
+            const slotElement = document.getElementById(`slot-${letter}-${number}`);
+            
             if (slotElement) {
-                // Determine the zone class based on the 'zone' property
-                const zonePrefix = assignment.zone === 'Employee' ? 'employee' : `fleet${assignment.zone}`;
-                
-                // CORRECTED LINE: Removed .toLowerCase() to match CSS exactly
-                const zoneClass = `${zonePrefix}-slot`;
+                // FIX: Gracefully handle assignments that are missing a zone property.
+                const hasZone = assignment.zone && typeof assignment.zone === 'string';
+                const zonePrefix = hasZone ? (assignment.zone === 'Employee' ? 'employee' : `fleet${assignment.zone}`) : '';
+                const zoneClass = hasZone ? `${zonePrefix}-slot` : '';
 
-                // Set ALL classes at once for a clean update
-                slotElement.className = 'parking-slot'; // Start fresh
-                slotElement.classList.add(zoneClass); // Add the zone border
-                slotElement.classList.add(assignment.vin ? 'occupied' : 'available'); // Add the status background
+                slotElement.classList.remove('empty-slot'); // Remove the default gray background
+
+                if (zoneClass) {
+                    slotElement.classList.add(zoneClass); // Add the colored zone border
+                }
+
+    // Add 'occupied' class if there's a VIN, otherwise add 'available'
+    slotElement.classList.add(assignment.vin ? 'occupied' : 'available');
             }
         });
         availSummary.textContent = `Occupied: ${occupiedCount} | Available: ${totalSlots - occupiedCount}`;
@@ -127,72 +181,48 @@ function runApp() {
             const inputs = snapshot.val();
             Object.keys(inputs).forEach(key => {
                 const element = document.getElementById(key);
-                if(element) element.value = inputs[key] || '';
+                if (element) element.value = inputs[key] || '';
             });
-            console.log("Zone inputs loaded from Firebase.");
-        } else {
-            console.log("No zone inputs found. Using default values.");
         }
     }
 
     async function updateGrids() {
-        const inputs = {
-            employeeStart: document.getElementById('employeeStart').value, employeeEnd: document.getElementById('employeeEnd').value,
-            fleetAStart: document.getElementById('fleetAStart').value, fleetAEnd: document.getElementById('fleetAEnd').value,
-            fleetBStart: document.getElementById('fleetBStart').value, fleetBEnd: document.getElementById('fleetBEnd').value,
-            fleetCStart: document.getElementById('fleetCStart').value, fleetCEnd: document.getElementById('fleetCEnd').value,
-            fleetDStart: document.getElementById('fleetDStart').value, fleetDEnd: document.getElementById('fleetDEnd').value,
-            fleetEStart: document.getElementById('fleetEStart').value, fleetEEnd: document.getElementById('fleetEEnd').value,
-            fleetFStart: document.getElementById('fleetFStart').value, fleetFEnd: document.getElementById('fleetFEnd').value,
-        };
-        await set(inputsRef, inputs);
-
-        const zones = ['Employee', 'A', 'B', 'C', 'D', 'E', 'F'].map(z => {
-            const prefix = z === 'Employee' ? 'employee' : `fleet${z}`;
-            return {
-                name: z,
-                startSlot: document.getElementById(`${prefix}Start`).value,
-                endSlot: document.getElementById(`${prefix}End`).value,
+        try {
+            const inputs = {
+                employeeStart: document.getElementById('employeeStart').value, employeeEnd: document.getElementById('employeeEnd').value,
+                fleetAStart: document.getElementById('fleetAStart').value, fleetAEnd: document.getElementById('fleetAEnd').value,
+                fleetBStart: document.getElementById('fleetBStart').value, fleetBEnd: document.getElementById('fleetBEnd').value,
+                fleetCStart: document.getElementById('fleetCStart').value, fleetCEnd: document.getElementById('fleetCEnd').value,
+                fleetDStart: document.getElementById('fleetDStart').value, fleetDEnd: document.getElementById('fleetDEnd').value,
+                fleetEStart: document.getElementById('fleetEStart').value, fleetEEnd: document.getElementById('fleetEEnd').value,
+                fleetFStart: document.getElementById('fleetFStart').value, fleetFEnd: document.getElementById('fleetFEnd').value,
             };
-        });
+            await set(inputsRef, inputs);
 
-        let newParkingLotSlots = [];
-        let lineNumber = 1;
-        const slotsArray = Array.isArray(parkingLotSlots) ? parkingLotSlots : Object.values(parkingLotSlots);
-
-        zones.forEach(zone => {
-            const startCoords = parseSlotInput(zone.startSlot);
-            const endCoords = parseSlotInput(zone.endSlot);
-            if (!startCoords || !endCoords) return;
-
-            const [startRow, endRow] = [Math.min(startCoords.row, endCoords.row), Math.max(startCoords.row, endCoords.row)];
-            const [startCol, endCol] = [Math.min(startCoords.col, endCoords.col), Math.max(startCoords.col, endCoords.col)];
-
-            for (let row = startRow; row <= endRow; row++) {
-                for (let col = startCol; col <= endCol; col++) {
-                    const colLetter = String.fromCharCode('A'.charCodeAt(0) + col - 1);
-                    const slotName = `${colLetter}${row}`;
-                    const existingData = slotsArray.find(s => s.slot === slotName);
-                    newParkingLotSlots.push({
-                        line: lineNumber++,
-                        slot: slotName,
-                        zone: zone.name,
-                        vin: existingData?.vin || '',
-                        hubRework: existingData?.hubRework || '',
-                        gaRework: existingData?.gaRework || '',
-                        chargingStatus: existingData?.chargingStatus || '',
-                        timestamp: existingData?.timestamp || '',
-                    });
+            const freshData = generateFreshMapData();
+            // Try to preserve existing VINs if possible
+            freshData.forEach(newSlot => {
+                const oldSlot = parkingLotSlots.find(s => s.slot === newSlot.slot && s.vin);
+                if (oldSlot) {
+                    newSlot.vin = oldSlot.vin;
+                    newSlot.hubRework = oldSlot.hubRework;
+                    newSlot.gaRework = oldSlot.gaRework;
+                    newSlot.chargingStatus = oldSlot.chargingStatus;
+                    newSlot.timestamp = oldSlot.timestamp;
                 }
-            }
-        });
-        
-        await set(slotsRef, newParkingLotSlots);
-        displayMessage('Parking map generated and saved!', 'success');
+            });
+
+            await set(slotsRef, freshData);
+            displayMessage('Parking map generated and saved!', 'success');
+        } catch (error) {
+            console.error("Error updating grids:", error);
+            displayMessage('Failed to save map. Check console.', 'error');
+        }
     }
     
     // --- Event Handler Functions ---
-    
+    // (assignVin, clearVin, saveStatus, search, exportToCsv functions remain the same as your last version)
+    // For brevity, they are omitted here but should be included in your file.
     async function assignVin() {
         const slotInput = vinSlotInput.value.toUpperCase();
         const vinInput = vinNumberInput.value.toUpperCase();
@@ -262,23 +292,37 @@ function runApp() {
             displayMessage('No new status selected.', 'error');
         }
     }
-    
-    async function clearAllData() {
-        if (confirm("Are you sure you want to clear all VINs and statuses? This cannot be undone.")) {
-            // Ensure we're working with an array before calling .map()
-            const slotsArray = Array.isArray(parkingLotSlots) ? parkingLotSlots : Object.values(parkingLotSlots);
 
-            const clearedSlots = slotsArray.map(slot => ({
-                ...slot,
-                vin: '', 
-                hubRework: '', 
-                gaRework: '', 
-                chargingStatus: '', 
-                timestamp: ''
-            }));
-            
-            await set(slotsRef, clearedSlots);
-            displayMessage('All VIN and status data cleared.', 'success');
+    async function clearAllData() {
+        if (confirm("Are you sure you want to delete all zones and slot data? This action cannot be undone.")) {
+            try {
+                // 1. Delete all slot and VIN data from Firebase
+                await remove(slotsRef);
+
+                // 2. Delete all saved zone input data from Firebase
+                await remove(inputsRef);
+
+                // 3. Clear the input fields on the page for immediate feedback
+                const inputIds = [
+                    'employeeStart', 'employeeEnd',
+                    'fleetAStart', 'fleetAEnd',
+                    'fleetBStart', 'fleetBEnd',
+                    'fleetCStart', 'fleetCEnd',
+                    'fleetDStart', 'fleetDEnd',
+                    'fleetEStart', 'fleetEEnd',
+                    'fleetFStart', 'fleetFEnd'
+                ];
+                inputIds.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.value = '';
+                });
+
+                displayMessage('All map and VIN data has been deleted.', 'success');
+                
+            } catch (error) {
+                console.error("Error deleting all data:", error);
+                displayMessage('Failed to delete data. See console for details.', 'error');
+            }
         }
     }
 
@@ -320,17 +364,24 @@ function runApp() {
         link.click();
         document.body.removeChild(link);
     }
-
+    
     // --- REAL-TIME DATABASE LISTENER ---
     onValue(slotsRef, (snapshot) => {
+        let freshData = [];
         if (snapshot.exists()) {
             const data = snapshot.val();
-            // This line ensures parkingLotSlots is ALWAYS an array, fixing both buttons.
-            parkingLotSlots = Array.isArray(data) ? data : Object.values(data);
-        } else {
-            parkingLotSlots = [];
+            let potentialArray = [];
+            if (Array.isArray(data)) {
+                potentialArray = data;
+            } else if (typeof data === 'object' && data !== null) {
+                potentialArray = Object.values(data);
+            }
+            freshData = potentialArray.filter(
+                item => typeof item === 'object' && item !== null && item.slot
+            );
         }
-        console.log("Real-time data synced from Firebase.");
+        parkingLotSlots = freshData;
+        console.log("Real-time data synced and validated from Firebase.");
         updateUI();
     });
 
