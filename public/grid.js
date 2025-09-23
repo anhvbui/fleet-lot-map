@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
 import { getDatabase, ref, set, get, onValue, remove } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-database.js";
 
-// Your web app's Firebase configuration
+//Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyD7qC5px8dXI0mbMqpwDh6DzcWc17P64e0",
     authDomain: "yard-app-81e9c.firebaseapp.com",
@@ -16,13 +16,12 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-// STEP 2: CALL runApp() DIRECTLY. REMOVE THE OLD WAITING LOGIC.
 runApp();
 
 function runApp() {
-    let parkingLotSlots = []; // This is the local "state" of the app.
+    let parkingLotSlots = []; 
 
-    // --- Element Selectors ---
+
     const parkingGridContainer = document.getElementById('parking-grids-container');
     const generateBtn = document.getElementById('generateBtn');
     const vinTableBody = document.getElementById('vinTableBody');
@@ -42,11 +41,11 @@ function runApp() {
     const chargingStatusEl = document.getElementById('chargingStatus');
     const exportCsvBtn = document.getElementById('exportCsvBtn');
 
-    // --- Firebase Database References ---
+    //Firebase Database References
     const inputsRef = ref(db, 'parkingMap/inputs');
     const slotsRef = ref(db, 'parkingMap/slots');
 
-    // --- Utility Functions ---
+    //Generates zone number format
     const letterToNumber = (letter) => letter.toUpperCase().charCodeAt(0) - 'A'.charCodeAt(0) + 1;
     
     const parseSlotInput = (slotString) => {
@@ -65,8 +64,8 @@ function runApp() {
         setTimeout(() => (actionMessageEl.textContent = ''), 3000);
     };
 
-    // --- HELPER FUNCTION ---
-    // Generates a fresh, empty array of slot objects based on the zone inputs.
+
+    //Generates empty array of slot objects based on the zone inputs
     function generateFreshMapData() {
         const zones = ['Employee', 'A', 'B', 'C', 'D', 'E', 'F'].map(z => {
             const prefix = z === 'Employee' ? 'employee' : `fleet${z}`;
@@ -108,8 +107,8 @@ function runApp() {
         return newParkingLotSlots;
     }
 
-    // --- Core Application Logic ---
 
+    //Draw an empty grid for the parking lot
     function createEmptyGrid() {
         parkingGridContainer.innerHTML = '';
         const rowContainer = document.createElement('div');
@@ -131,7 +130,7 @@ function runApp() {
     }
 
     function updateUI() {
-        createEmptyGrid(); // ADD THIS LINE to completely reset the grid visually
+        createEmptyGrid(); //Reset the grid 
 
         const assignments = parkingLotSlots; 
         vinTableBody.innerHTML = '';
@@ -157,18 +156,18 @@ function runApp() {
             const slotElement = document.getElementById(`slot-${letter}-${number}`);
             
             if (slotElement) {
-                // FIX: Gracefully handle assignments that are missing a zone property.
                 const hasZone = assignment.zone && typeof assignment.zone === 'string';
                 const zonePrefix = hasZone ? (assignment.zone === 'Employee' ? 'employee' : `fleet${assignment.zone}`) : '';
                 const zoneClass = hasZone ? `${zonePrefix}-slot` : '';
 
-                slotElement.classList.remove('empty-slot'); // Remove the default gray background
+                slotElement.classList.remove('empty-slot'); 
 
                 if (zoneClass) {
-                    slotElement.classList.add(zoneClass); // Add the colored zone border
+                    slotElement.classList.add(zoneClass); //Add the zone colors
                 }
 
-    // Add 'occupied' class if there's a VIN, otherwise add 'available'
+
+    //Add 'occupied' class if there's a VIN, otherwise add 'available'
     slotElement.classList.add(assignment.vin ? 'occupied' : 'available');
             }
         });
@@ -220,9 +219,6 @@ function runApp() {
         }
     }
     
-    // --- Event Handler Functions ---
-    // (assignVin, clearVin, saveStatus, search, exportToCsv functions remain the same as your last version)
-    // For brevity, they are omitted here but should be included in your file.
     async function assignVin() {
         const slotInput = vinSlotInput.value.toUpperCase();
         const vinInput = vinNumberInput.value.toUpperCase();
@@ -296,13 +292,13 @@ function runApp() {
     async function clearAllData() {
         if (confirm("Are you sure you want to delete all zones and slot data? This action cannot be undone.")) {
             try {
-                // 1. Delete all slot and VIN data from Firebase
+                //Delete all slot and VIN data from Firebase
                 await remove(slotsRef);
 
-                // 2. Delete all saved zone input data from Firebase
+                //Delete all saved zone input data from Firebase
                 await remove(inputsRef);
 
-                // 3. Clear the input fields on the page for immediate feedback
+                //Clear the input fields on the page
                 const inputIds = [
                     'employeeStart', 'employeeEnd',
                     'fleetAStart', 'fleetAEnd',
@@ -365,7 +361,7 @@ function runApp() {
         document.body.removeChild(link);
     }
     
-    // --- REAL-TIME DATABASE LISTENER ---
+    //Firebase real-time listener to sync data changes
     onValue(slotsRef, (snapshot) => {
         let freshData = [];
         if (snapshot.exists()) {
@@ -385,7 +381,7 @@ function runApp() {
         updateUI();
     });
 
-    // --- INITIAL PAGE LOAD & EVENT LISTENERS ---
+    
     async function initialLoad() {
         createEmptyGrid();
         await loadAndApplyInputs();

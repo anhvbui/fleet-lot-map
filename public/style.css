@@ -14,6 +14,7 @@
   border: 3px solid #777777; /* Adds a solid border around the box */
   padding: 15px; 
   margin: 20px; 
+  padding-bottom: 10px;
 }
 
 .fleetA-slot {
@@ -21,7 +22,7 @@
 }
 
 .fleetB-slot {
-    box-shadow: inset 0 0 0 2px #DAA520; /* Dark Yellow */
+    box-shadow: inset 0 0 0 2px #ffce74; /* Dark Yellow */
 }
 
 .fleetC-slot {
@@ -29,7 +30,7 @@
 }
 
 .fleetD-slot {
-    box-shadow: inset 0 0 0 2px #4682B4; /* Dark Steel Blue */
+    box-shadow: inset 0 0 0 2px #0f64aa; /* Dark Steel Blue */
 }
 
 .fleetE-slot, .fleetF-slot {
@@ -102,13 +103,13 @@
 
 
 .parking-slot.available {
-    background-color: #98c4a2;
+    background-color: #a7d3b1;
     color: #175a27;
 }
 
 .parking-slot.occupied {
-    background-color: #f8d7da;
-    color: #80212a;
+    background-color: #71b3f0;
+    color: #233864;
 }
 
 .parking-slot.reserved {
